@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Video Upload and Display</title>
+    </head>
+    <body>
+        <div>
+            {% for v in video %}
+                <video width="320" height="240" controls="controls" preload="preload">
+                    <source src="{{v.video.url}}" type="video/mp4">
+                </video>
+                <li><a href="{% url 'video_view' v.pk %}">{{v.title}}</a></li>
+            {% endfor %}
+        </div>
+        
+    </body>
+</html>

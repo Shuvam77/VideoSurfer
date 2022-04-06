@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Video Upload and Display</title>
+    </head>
+    <body>
+        <div>
+            <div>
+                <video autoplay width="500" height="500" controls="controls" preload="preload">
+                    <source src="{{video.video.url}}" type="video/mp4" media="all and (max-width:600px)">
+                </video>
+            </div>
+            <br>
+            <div >
+                <form method="POST">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    {{ comment_form }}
+                    <button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+                  </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            {% if comments %}
+            <strong class="text-secondary"> Comment</strong>
+            <hr>
+            <ul>
+              {% for comment in comments %}
+              <li>           
+               <div>
+                  <span>
+                    <strong class="text-info">{{ comment.author }} </strong>
+                  </span>
+                  <p>
+                    {{ comment.comment|safe }}
+                  </p>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+              <strong class="text-secondary">No comments yet...</strong>
+            {% endif %}
+        </div>
+        
+    </body>
+</html>

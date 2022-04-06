@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Video Upload and Display</title>
+    </head>
+    <body>
+
+		{% if user.is_authenticated %}
+			Hi {{ user.email }}!
+
+			<div style="width: 500px; margin: auto;">
+				<fieldset name="Video File Upload and Display">
+					<!-- {% if msg %} {% autoescape off %} {{ msg }} {% endautoescape %} {% endif %} -->
+					<form method="post" action="/" enctype="multipart/form-data">
+						{% csrf_token %}
+						<dl>
+							<p>
+								<label>Title:</label>&nbsp;&nbsp;
+								<input name="title" placeholder="title" type="text" autocomplete="off">     
+								<br>                
+								<label>Browse and select a video file</label>&nbsp;&nbsp;
+								<input type="file" name="video" autocomplete="off" required>
+							</p>
+						</dl>
+						<p>
+							<input type="submit" value="Upload">
+						</p>
+					</form>
+				</fieldset>
+	
+				<!-- {% if filename %} -->
+				<!-- <div style="margin: 10px auto;">
+					<video autoplay="autoplay" controls="controls" preload="preload">
+						<source src="{{ MEDIA_URL }}/{{ video }}" type="video/mp4"></source>
+					</video>
+				</div> -->
+				<!-- {% endif %} -->
+			</div>
+			<div>
+				<p><a href="{% url 'list' %}">Video List</a></p>
+
+			</div>
+			<div>
+				<p><a href="{% url 'logout' %}">Log Out</a></p>
+			</div>
+
+
+
+
+		{% else %}
+			<p>You are not logged in</p>
+			<a href="{% url 'login' %}">Log In</a>
+			<a href="{% url 'signup' %}">Sign Up</a>
+		{% endif %}
+
+        
+    </body>
+</html>

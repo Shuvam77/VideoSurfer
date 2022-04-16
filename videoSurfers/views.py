@@ -13,6 +13,10 @@ class IndexView(CreateView):
     model = VideoSurf
     template_name = 'index.html'
     fields = ['title','video']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
     # success_url = reverse_lazy('index')
     
 

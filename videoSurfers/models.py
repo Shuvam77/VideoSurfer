@@ -15,10 +15,10 @@ class VideoSurf(models.Model):
     title = models.CharField (max_length=200, blank=False, null=True)
     video = models.FileField(blank=False, null=True, upload_to='videos', verbose_name='video')
     slug = models.SlugField(null=True, blank=True)
-    # author = models.ForeignKey(
-    #     get_user_model(),
-    #     on_delete=models.CASCADE
-    # )
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE
+    )
         
     def save(self, *args, **kwargs):
         if not self.id:

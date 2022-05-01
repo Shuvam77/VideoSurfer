@@ -13,12 +13,17 @@ class IndexView(CreateView):
     model = VideoSurf
     template_name = 'index.html'
     fields = ['title','video']
+    # success_url = '/'
+
+    def get_contex_data(self, *args, **kwargs):
+        context = super(IndexView, self).get_context_data(*args,**kwargs)
+        context["videos"] = VideoSurf.objects.all()
+        return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-    # success_url = reverse_lazy('index')
-    
+
 
 
 class ListView(LoginRequiredMixin ,ListView):

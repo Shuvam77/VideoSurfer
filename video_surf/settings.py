@@ -45,8 +45,40 @@ INSTALLED_APPS = [
     'users',
 
     #third-party
-    'embed_video',
+    'video_encoding',
+    'django_rq',
 ]
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'PASSWORD': 'some-password',
+        'DEFAULT_TIMEOUT': 360,
+    },
+    'with-sentinel': {
+        'SENTINELS': [('localhost', 26736), ('localhost', 26737)],
+        'MASTER_NAME': 'redismaster',
+        'DB': 0,
+        'PASSWORD': 'secret',
+        'SOCKET_TIMEOUT': None,
+        'CONNECTION_KWARGS': {
+            'socket_connect_timeout': 0.3
+        },
+    },
+    'high': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), # If you're on Heroku
+        'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    }
+}
+
+RQ_EXCEPTION_HANDLERS = ['path.to.my.handler'] # If you need custom exception handlers
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,9 +118,10 @@ WSGI_APPLICATION = 'video_surf.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation

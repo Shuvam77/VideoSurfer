@@ -27,6 +27,15 @@
 						</p>
 					</form>
 				</fieldset>
+
+					
+				<h2>Uploaded Videos</h2>
+				{% for video in videos %}
+				  {{ video.title }}
+				  {{ video.file.name }}
+				  (Duration: {{ video.duration }}s, {{ video.width }}x{{ video.height }})
+				  <br>
+				{% endfor %}
 	
 				<!-- {% if filename %} -->
 				<!-- <div style="margin: 10px auto;">

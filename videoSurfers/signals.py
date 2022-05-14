@@ -1,5 +1,4 @@
 from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django_rq import enqueue
 from video_encoding import tasks
 from .models import VideoSurf
@@ -18,6 +17,7 @@ def convert_video(sender, instance, **kwargs):
             instance._meta.app_label,
             instance._meta.model_name,
             instance.pk)
+    print("Done Converting")
 
 
 @receiver(signals.encoding_finished, sender=VideoSurf)
